@@ -1,16 +1,21 @@
 # -*- coding: utf-8 -*-
+
 """script_vista_teste.ipynb
 
 Original file is located produced at Google Collab
 
-IMPORTANTE: coloque o link do seu extrato csv da Noh antes de rodar os códigos.
-IMPORTANTE2: modifique o nome do arquivo que será gerado na ultima linha de código antes de exportar.
+IMPORTANTE: coloque o link do seu extrato csv da Noh antes de rodar os códigos em input_file
 
 """
 
+from IPython.display import display
 import pandas as pd
 
-df_noh = pd.read_csv('link_do_csv_noh.csv')
+# Coloque o nome do arquivo do seu extrato csv da Noh
+input_file = 'Noh_extrato_28082025_06092025.csv'
+output_file = f'processed_{input_file.split('.')[0]}.xlsx'
+
+df_noh = pd.read_csv(f"./input_files/{input_file}")
 
 df_noh.info()
 
@@ -57,11 +62,11 @@ display(df_noh.head())
 
 """
 
-df_noh['Valor'] = df_noh['Valor'].astype(str).str.replace('R$', '', regex=False).str.replace(' ', '', regex=False).str.replace('\xa0', '', regex=False).str.replace(',', '.', regex=False)
+df_noh['Valor'] = df_noh['Valor'].astype(str).str.replace('.', '', regex=False).str.replace('R$', '', regex=False).str.replace(' ', '', regex=False).str.replace('\xa0', '', regex=False).str.replace(',', '.', regex=False)
 df_noh['Valor'] = df_noh['Valor'].astype(float)
 display(df_noh.head())
 display(df_noh.info())
 
 """# exportar"""
 
-df_noh.to_excel('noh_extrato_final.xlsx', index=False)
+df_noh.to_excel(f"./output_files/{output_file}", index=False)
